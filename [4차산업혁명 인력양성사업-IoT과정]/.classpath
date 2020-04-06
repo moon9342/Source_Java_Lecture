@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="library/can_protocol_lib/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="library/mybatis_3.5.2/mybatis-3.5.2.jar"/>
+	<classpathentry kind="lib" path="library/mysql_jdbc_driver_5.1.7/mysql-connector-java-5.1.7-bin.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx-swt.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx.base.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx.fxml.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx.media.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="library/openJavaFx/javafx.web.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

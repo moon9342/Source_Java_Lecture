@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="BookSQL">
+    <select id="getBookTitle" parameterType="String" resultType="String">
+        SELECT btitle FROM books WHERE bisbn = #{bisbn}
+    </select>
+
+    <select id="getBooksKeyword" parameterType="String" resultType="book">
+        SELECT btitle,bauthor,bprice,bisbn FROM books WHERE btitle like #{keyword}
+    </select>    
+
+    <delete id="deleteBook">
+        delete from books
+    </delete>    
+    
+</mapper>
