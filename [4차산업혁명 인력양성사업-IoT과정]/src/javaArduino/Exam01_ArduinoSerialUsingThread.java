@@ -25,7 +25,7 @@ public class Exam01_ArduinoSerialUsingThread {
 //	            		portIdentifier.open(this.getClass().getName(),2000);
 
 	          CommPort commPort = 
-	    		portIdentifier.open("HELLO",2000);
+	    		portIdentifier.open("TT",2000);
 	        	
 	            if ( commPort instanceof SerialPort ) {
 	                //포트 설정(통신속도 설정. 기본 9600으로 사용)
