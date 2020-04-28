@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -27,18 +28,15 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 
-class ArduinoSerialListener implements SerialPortEventListener {
+class Exam04_ArduinoSerialListener implements SerialPortEventListener {
 
-//	BufferedReader br;
 	InputStream in;
-	BufferedWriter bw;
-	Exam03_AndroidArduinoServer window;
+	BufferedWriter bw;	
+	Exam04_AndroidSeekBarArduinoLEDServer window;
 	
-//	ArduinoSerialListener(BufferedReader br, BufferedWriter bw) {
-	ArduinoSerialListener(InputStream in, BufferedWriter bw, Exam03_AndroidArduinoServer window) {
-//		this.br = br;
-		this.in = in;
+	Exam04_ArduinoSerialListener(InputStream in, BufferedWriter bw, Exam04_AndroidSeekBarArduinoLEDServer window) {
 		this.bw = bw;
+		this.in = in;
 		this.window = window;
 	}
 	
@@ -51,14 +49,6 @@ class ArduinoSerialListener implements SerialPortEventListener {
             	System.out.println("받은 바이트수 : " + available);
                 byte chunk[] = new byte[available];
                 in.read(chunk, 0, available);
-
-            	// 아두이노로부터 ACK메시지 받기
-//                 String fromArduino = br.readLine();
-            	
-                // 바로 출력                
-//                 if( (fromArduino != null) && (fromArduino.length() != 0) ) {
-//                	 System.out.println("아두이노에서 받은 메시지 : " + fromArduino);	 
-//                 }
                  
                 System.out.println("아두이노에서 받은 메시지 : " + new String(chunk));
                 
@@ -73,7 +63,7 @@ class ArduinoSerialListener implements SerialPortEventListener {
 	}	
 }
 
-public class Exam03_AndroidArduinoServer extends Application {
+public class Exam04_AndroidSeekBarArduinoLEDServer extends Application {
 
 	TextArea textarea;
 	Button btn;
@@ -81,6 +71,7 @@ public class Exam03_AndroidArduinoServer extends Application {
 	ExecutorService executorService = Executors.newCachedThreadPool();
 	BufferedReader br;
 	BufferedWriter bw;
+	OutputStream out;
 	PrintWriter pr;
 	
 	private void printMessage(String msg) {
@@ -105,24 +96,19 @@ public class Exam03_AndroidArduinoServer extends Application {
 			Runnable runnable = () -> {
 				try {
 					server = new ServerSocket(7890);
-					printMessage("[Android Arduino Server 기동-클라이언트 접속 대기중]");
+					printMessage("[Android SeekBar Arduino LED Server 기동-클라이언트 접속 대기중]");
 					Socket s = server.accept();
-					printMessage("[Android Arduino Server 기동-클라이언트 접속 성공]");
+					printMessage("[Android SeekBar Arduino LED Server 기동-클라이언트 접속 성공]");
 					BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 					pr = new PrintWriter(s.getOutputStream());
 					String line = "";
 					while(true) {
 						if((line = br.readLine()) != null) {
-							if(line.equals("LED_ON")) {
-								printMessage("불이켜져요!!");
-								bw.write(line,0,line.length());								
-								bw.flush();
-							}
-							if(line.equals("LED_OFF")) {
-								printMessage("불이꺼져요!!");
-								bw.write(line,0,line.length());								
-								bw.flush();
-							}							
+							printMessage("현재 불빛의 세기 : " + line);
+														
+							bw.write(line,0,line.length());
+							bw.newLine();
+							bw.flush();
 						}
 					}
 				} catch (IOException e1) {
@@ -171,13 +157,13 @@ public class Exam03_AndroidArduinoServer extends Application {
 
 					//Input,OutputStream 버퍼 생성 후 오픈
 					InputStream in = serialPort.getInputStream();
-					br = new BufferedReader(new InputStreamReader(in));	
-		            bw = new BufferedWriter(new OutputStreamWriter(serialPort.getOutputStream()));
-		                
-//	                serialPort.addEventListener(new ArduinoSerialListener(br,bw));
-		            serialPort.addEventListener(new ArduinoSerialListener(in,bw,this));
+					out = serialPort.getOutputStream();
+					br = new BufferedReader(new InputStreamReader(in));						
+		            bw = new BufferedWriter(new OutputStreamWriter(out));
+		                	       
+		            serialPort.addEventListener(new Exam04_ArduinoSerialListener(in,bw,this));
 	                serialPort.notifyOnDataAvailable(true);
-	                                
+		            
 	            } else {
 	            	System.out.println("Serial 포트만 사용가능합니다.");
 	            }
