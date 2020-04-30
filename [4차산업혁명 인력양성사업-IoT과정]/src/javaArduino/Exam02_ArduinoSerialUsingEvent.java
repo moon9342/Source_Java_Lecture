@@ -1,9 +1,6 @@
 package javaArduino;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import gnu.io.CommPort;
@@ -11,24 +8,16 @@ import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 
 // library의 rxtxSerial.dll은 %JAVAHOME%bin에 위치시키고
 // library의 RXTXcomm.jar는 library path에 등록
 
-class SerialListener implements SerialPortEventListener {
+class Exam02_SerialListener implements SerialPortEventListener {
 
 	InputStream in;
 	OutputStream out;
 	
-	SerialListener(InputStream in, OutputStream out) {
+	Exam02_SerialListener(InputStream in, OutputStream out) {
 		this.in = in;
 		this.out = out;
 	}
@@ -41,8 +30,6 @@ class SerialListener implements SerialPortEventListener {
                 byte chunk[] = new byte[available];
                 in.read(chunk, 0, available);
 
-                // 바로 출력
-                
                 System.out.print("받은 메시지 : " + new String(chunk));
             } catch (Exception e) {
                 System.err.println(e.toString());
@@ -81,7 +68,7 @@ public class Exam02_ArduinoSerialUsingEvent {
 	                OutputStream out = serialPort.getOutputStream();
 	                
 	                
-	                serialPort.addEventListener(new SerialListener(in,out));
+	                serialPort.addEventListener(new Exam02_SerialListener(in,out));
 	                serialPort.notifyOnDataAvailable(true);
 
 	            } else {

@@ -28,13 +28,14 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 
-class Exam04_ArduinoSerialListener implements SerialPortEventListener {
+class Exam05_ArduinoSerialListener implements SerialPortEventListener {
 
 	InputStream in;
 	BufferedWriter bw;	
-	Exam04_AndroidSeekBarArduinoLEDServer window;
+	Exam05_AndroidSeekBarArduinoLEDServer window;
 	
-	Exam04_ArduinoSerialListener(InputStream in, BufferedWriter bw, Exam04_AndroidSeekBarArduinoLEDServer window) {
+	Exam05_ArduinoSerialListener(InputStream in, BufferedWriter bw, 
+			Exam05_AndroidSeekBarArduinoLEDServer window) {
 		this.bw = bw;
 		this.in = in;
 		this.window = window;
@@ -63,7 +64,7 @@ class Exam04_ArduinoSerialListener implements SerialPortEventListener {
 	}	
 }
 
-public class Exam04_AndroidSeekBarArduinoLEDServer extends Application {
+public class Exam05_AndroidSeekBarArduinoLEDServer extends Application {
 
 	TextArea textarea;
 	Button btn;
@@ -161,7 +162,7 @@ public class Exam04_AndroidSeekBarArduinoLEDServer extends Application {
 					br = new BufferedReader(new InputStreamReader(in));						
 		            bw = new BufferedWriter(new OutputStreamWriter(out));
 		                	       
-		            serialPort.addEventListener(new Exam04_ArduinoSerialListener(in,bw,this));
+		            serialPort.addEventListener(new Exam05_ArduinoSerialListener(in,bw,this));
 	                serialPort.notifyOnDataAvailable(true);
 		            
 	            } else {

@@ -27,16 +27,14 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 
-class ArduinoSerialListener implements SerialPortEventListener {
+class Exam04_ArduinoSerialListener implements SerialPortEventListener {
 
-//	BufferedReader br;
 	InputStream in;
 	BufferedWriter bw;
-	Exam03_AndroidArduinoServer window;
+	Exam04_AndroidArduinoServer window;
 	
-//	ArduinoSerialListener(BufferedReader br, BufferedWriter bw) {
-	ArduinoSerialListener(InputStream in, BufferedWriter bw, Exam03_AndroidArduinoServer window) {
-//		this.br = br;
+
+	Exam04_ArduinoSerialListener(InputStream in, BufferedWriter bw, Exam04_AndroidArduinoServer window) {
 		this.in = in;
 		this.bw = bw;
 		this.window = window;
@@ -51,14 +49,6 @@ class ArduinoSerialListener implements SerialPortEventListener {
             	System.out.println("받은 바이트수 : " + available);
                 byte chunk[] = new byte[available];
                 in.read(chunk, 0, available);
-
-            	// 아두이노로부터 ACK메시지 받기
-//                 String fromArduino = br.readLine();
-            	
-                // 바로 출력                
-//                 if( (fromArduino != null) && (fromArduino.length() != 0) ) {
-//                	 System.out.println("아두이노에서 받은 메시지 : " + fromArduino);	 
-//                 }
                  
                 System.out.println("아두이노에서 받은 메시지 : " + new String(chunk));
                 
@@ -73,7 +63,7 @@ class ArduinoSerialListener implements SerialPortEventListener {
 	}	
 }
 
-public class Exam03_AndroidArduinoServer extends Application {
+public class Exam04_AndroidArduinoServer extends Application {
 
 	TextArea textarea;
 	Button btn;
@@ -174,8 +164,7 @@ public class Exam03_AndroidArduinoServer extends Application {
 					br = new BufferedReader(new InputStreamReader(in));	
 		            bw = new BufferedWriter(new OutputStreamWriter(serialPort.getOutputStream()));
 		                
-//	                serialPort.addEventListener(new ArduinoSerialListener(br,bw));
-		            serialPort.addEventListener(new ArduinoSerialListener(in,bw,this));
+		            serialPort.addEventListener(new Exam04_ArduinoSerialListener(in,bw,this));
 	                serialPort.notifyOnDataAvailable(true);
 	                                
 	            } else {
