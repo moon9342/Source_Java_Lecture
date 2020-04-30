@@ -51,7 +51,7 @@ class Exam05_ArduinoSerialListener implements SerialPortEventListener {
                 byte chunk[] = new byte[available];
                 in.read(chunk, 0, available);
                  
-                System.out.println("아두이노에서 받은 메시지 : " + new String(chunk));
+                //System.out.println("아두이노에서 받은 메시지 : " + new String(chunk));
                 
                 window.pr.println(new String(chunk));
                 window.pr.flush();
