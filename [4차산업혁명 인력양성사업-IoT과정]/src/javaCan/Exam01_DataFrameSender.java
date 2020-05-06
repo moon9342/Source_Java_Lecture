@@ -1,6 +1,5 @@
-package canSenderReceiver;
+package javaCan;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -13,12 +12,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-public class Exam02_DataFrameSender extends Application{
+public class Exam01_DataFrameSender extends Application{
 
 	TextArea textarea;    // 메시지창 
 	Button connBtn, sendBtn;    // 포트 연결 버튼, Data Frame 보내기 버튼
@@ -27,23 +25,22 @@ public class Exam02_DataFrameSender extends Application{
 	private CommPort commPort;
 	private SerialPort serialPort;
 	
-	private BufferedInputStream bin;
 	private OutputStream out;
 	
 	// TextArea에 문자열 출력하기 위한 method
-	private void printMsg(String name) {
+	private void printMSG(String msg) {
 		Platform.runLater(()->{
-			textarea.appendText(name + "\n");
+			textarea.appendText(msg + "\n");
 		});
 	}
 	
 	private void connectPort(String portName) {
 		try {
 			portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
-			printMsg(portName + "에 연결을 시도합니다!!");
+			printMSG(portName + "에 연결을 시도합니다!!");
 			
 			if(portIdentifier.isCurrentlyOwned()) {
-				printMsg(portName + "가 현재 다른 프로그램에 의해 사용중입니다. ");				
+				printMSG(portName + "가 현재 다른 프로그램에 의해 사용중입니다. ");				
 			} else {
 				// 포트를 열고 포트객체를 얻는다.
 				// open()의 첫번째 인자 : Name of application making this call.
@@ -55,12 +52,11 @@ public class Exam02_DataFrameSender extends Application{
 							SerialPort.DATABITS_8, // 데이터 비트 
 							SerialPort.STOPBITS_1, // Stop 비트 
 							SerialPort.PARITY_NONE);  // Parity 비트
-					// Stream 생성
-					bin = new BufferedInputStream(serialPort.getInputStream());
+					// OutputStream 생성
 					out = serialPort.getOutputStream(); 
-					printMsg("성공적으로 " + portName + "에 접속되었습니다.!!");
+					printMSG("성공적으로 " + portName + "에 접속되었습니다.!!");
 				} else {
-					printMsg("Serial Port만 사용할 수 있습니다.!!");	
+					printMSG("Serial Port만 사용할 수 있습니다.!!");	
 				}
 			}
 		} catch (Exception e) {
@@ -69,6 +65,7 @@ public class Exam02_DataFrameSender extends Application{
 	}
 	
 	private void sendDataFrame(String msg) {
+		// String msg = "W" + "28" + "10003B01" + "0000000000005011";
 		// 데이터프레임 전송
 		// CAN 네트워크상에 특정 CAN Message를 보내고자 할 때
 		// 시작문자 => 1문자 => ":" 이용
@@ -101,14 +98,14 @@ public class Exam02_DataFrameSender extends Application{
 		String sendMsg = ":" + msg + 
 				Integer.toHexString(checksumData).toUpperCase() + "\r";
 		
-		printMsg("생성된 전송 메시지 : " + sendMsg);
+		printMSG("생성된 전송 메시지 : " + sendMsg);
 		
 		// 전송할 byte배열 생성
 		byte[] inputData = sendMsg.getBytes();
 		try {
 			out.write(inputData);
 			//out.flush();
-			printMsg("성공적으로 전송되었습니다.!!");
+			printMSG("성공적으로 전송되었습니다.!!");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}					
@@ -127,7 +124,7 @@ public class Exam02_DataFrameSender extends Application{
 		connBtn.setPrefSize(200, 50);
 		connBtn.setPadding(new Insets(10));
 		connBtn.setOnAction(e->{
-			String portName = "COM9";
+			String portName = "COM16";
 			// 포트 접속
 			connectPort(portName);
 		});
@@ -161,6 +158,5 @@ public class Exam02_DataFrameSender extends Application{
 	 
 	public static void main(String[] args) {
 		launch();
-	}	
-	
+	}		
 }
