@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="library/openJavaFx/javafx.media.jar"/>
 	<classpathentry kind="lib" path="library/openJavaFx/javafx.swing.jar"/>
 	<classpathentry kind="lib" path="library/openJavaFx/javafx.web.jar"/>
+	<classpathentry kind="lib" path="library/hadoop/hadoop-core-1.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
