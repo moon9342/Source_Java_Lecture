@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class Exam02_DataFrameReceiver extends Application {
 
 	TextArea textarea;
-	// 포트접속버튼, 환경쓰기버튼, 데이터수신가능버튼, 데이터수신가능버튼
+	// 포트접속버튼, 환경쓰기버튼, 데이터수신가능버튼, 데이터수신불가능버튼
 	Button connBtn, envBtn, revEnableBtn, revDisableBtn;
 		
 	private CommPortIdentifier portIdentifier;
