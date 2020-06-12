@@ -5,15 +5,19 @@
  
 <mapper namespace="BookSQL">
     <select id="getBookTitle" parameterType="String" resultType="String">
-        SELECT btitle FROM books WHERE bisbn = #{bisbn}
+        SELECT btitle FROM book WHERE bisbn = #{bisbn}
     </select>
 
     <select id="getBooksKeyword" parameterType="String" resultType="book">
-        SELECT btitle,bauthor,bprice,bisbn FROM books WHERE btitle like #{keyword}
+        SELECT btitle,bauthor,bprice,bisbn FROM book WHERE btitle like #{keyword}
+    </select>    
+
+    <select id="getBooksKeywordMap" parameterType="String" resultType="java.util.HashMap">
+        SELECT bisbn, btitle FROM book WHERE btitle like #{keyword}
     </select>    
 
     <delete id="deleteBook">
-        delete from books
+        delete from book
     </delete>    
     
 </mapper>

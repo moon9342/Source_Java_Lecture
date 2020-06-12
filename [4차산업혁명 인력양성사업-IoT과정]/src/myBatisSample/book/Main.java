@@ -1,6 +1,8 @@
 package myBatisSample.book;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import myBatisSample.book.service.BookService;
 import myBatisSample.book.vo.BookVO;
@@ -24,6 +26,12 @@ public class Main {
 		//int num = service.deleteBookAll();
 		//System.out.println("삭제된 책 수 : " + num);
 		
+		// 4. Map형태의 데이터 가져오기
+		List<Map<String,String>> result = service.getBooksByKeywordMap("여행");
+		for(Map<String,String> k : result) {
+			System.out.println("책 ISBN : " + k.get("bisbn") + 
+					", 책 제목 : " + k.get("btitle"));	
+		}
 	}
 
 }

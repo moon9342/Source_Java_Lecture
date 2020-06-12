@@ -1,6 +1,7 @@
 package myBatisSample.book.service;
 
 import java.util.List;
+import java.util.Map;
 
 import myBatisSample.book.dao.BookDAO;
 import myBatisSample.book.vo.BookVO;
@@ -29,4 +30,10 @@ public class BookService {
 		return result;
 	}
 
+	public List<Map<String,String>> getBooksByKeywordMap(String keyword) {
+		BookDAO dao = BookDAO.getInstance();
+		List<Map<String,String>> result = dao.selectByKeywordMap(keyword);
+		return result;
+	}
+	
 }

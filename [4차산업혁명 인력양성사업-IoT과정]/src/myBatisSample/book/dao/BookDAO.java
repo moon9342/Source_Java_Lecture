@@ -3,6 +3,7 @@ package myBatisSample.book.dao;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -53,6 +54,14 @@ public class BookDAO {
 		return result;
 	}
 
+	public List<Map<String,String>> selectByKeywordMap(String keyword) {
+		SqlSession sqlSession = factory.openSession();
+		List<Map<String,String>> result = sqlSession.selectList("BookSQL.getBooksKeywordMap",
+				"%" + keyword + "%");
+		sqlSession.close();
+		return result;
+	}
+	
 	public int delete() {
 		
 		SqlSession sqlSession = factory.openSession();
